@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat with ChatGPT</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div class="container mt-5">
+		<h1 class="text-center mb-5">Chat with ChatGPT</h1>
+		<div class="card mb-5">
+			<div class="card-body" id="chat-area">
+				<div class="row">
+					<div class="col-md-6 offset-md-6 text-right">
+						<p class="mb-0"><strong>ChatGPT:</strong> Hello, how can I assist you today?</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<form id="chat-form">
+			<div class="form-group">
+				<label for="message">Message:</label>
+				<input type="text" class="form-control" id="message" placeholder="Type your message here...">
+			</div>
+			<button type="submit" class="btn btn-primary">Send</button>
+		</form>
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			$('#chat-form').submit(function(event) {
+				event.preventDefault();
+				var message = $('#message').val();
+				$('#message').val('');
+				$('#chat-area').append('<div class="row"><div class="col-md-6"><p class="mb-0"><strong>You:</strong> ' + message + '</p></div></div>');
+				$.ajax({
+					url: 'chat/',
+					type: 'POST',
+					data: {
+						'message': message,
+						'csrfmiddlewaretoken': '{{ csrf_token }}'
+					},
+					dataType: 'json',
+					success: function(response) {
+                        $('#chat-area').append('<div class="row"><div class="col-md-6 offset-md-6 text-right"><p class="mb-0" style="text-align: justify;"><strong>ChatGPT:</strong> ' + response.response_text + '</p></div></div>');
+                    },
+					error: function(xhr, status, error) {
+						console.log(xhr.responseText);
+					}
+				});
+			});
+		});
+
+
+	</script>
+
+</body>
+</html>
