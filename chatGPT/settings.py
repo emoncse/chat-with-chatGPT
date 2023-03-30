@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chatbot',
+    'grammar',
+    'api',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
