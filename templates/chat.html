@@ -50,7 +50,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">
         <img src="{% static 'imran.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-        Tense Transformer
+        Pori@ChatBot
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -58,7 +58,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'chat_page' %}">Chat with Eliza</a>
+            <a class="nav-link" href="{% url 'chat_page' %}">Chat with Pori</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'grammar_page' %}">Tense Transformation</a>
@@ -73,7 +73,7 @@
 
 	<div class="container mt-5">
 
-		<h1 class="text-center mb-5">Chat with Eliza Bot</h1>
+		<h1 class="text-center mb-5">Chat with Pori@Bot</h1>
 
         <form id="chat-form">
 			<div class="form-group">
@@ -87,7 +87,7 @@
 			<div class="card-body" id="chat-area">
                 <div class="row">
                     <div class="col-md-6 offset-md-6 text-right">
-                        <p class="mb-0" style="text-align: justify;"><strong>Eliza:</strong> How can I assist you?</p>
+                        <p class="mb-0" style="text-align: justify;"><strong>Pori:</strong> How can I assist you?</p>
                     </div>
                 </div>
 			</div>
@@ -111,7 +111,7 @@
 					},
 					dataType: 'json',
 					success: function(response) {
-                        $('#chat-area').append('<div class="row"><div class="col-md-6 offset-md-6 text-right"><p class="mb-0" style="text-align: justify;"><strong>Eliza:</strong> ' + response.response_text + '</p></div></div>');
+                        $('#chat-area').append('<div class="row"><div class="col-md-6 offset-md-6 text-right"><p class="mb-0" style="text-align: justify;"><strong>Pori@:</strong> ' + response.response_text + '</p></div></div>');
                     },
 					error: function(xhr, status, error) {
 						console.log(xhr.responseText);
