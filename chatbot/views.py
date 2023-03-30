@@ -1,5 +1,4 @@
 import os
-
 from dotenv import load_dotenv
 import requests
 from django.http import JsonResponse
@@ -28,6 +27,7 @@ def getting_ready(message):
         stop=None,
         temperature=0.7,
     )
+
     return str(completion.choices[0].text)
 
 
