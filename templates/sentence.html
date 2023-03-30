@@ -10,6 +10,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <link rel="icon" type="image/x-icon" href="{% static 'imran.ico' %}">
+    <meta property="og:title" content="AI Services | Imran Nazir Emon">
+    <meta property="og:image" content="{% static 'imran.png' %}">
+
     <style>
     body {
       background-color: #f2f2f2;
@@ -18,19 +22,27 @@
       text-align: center;
       color: #333;
     }
-    #chat-form {
-      margin-bottom: 20px;
-    }
-    #chat-area {
-      background-color: #fff;
-      padding: 10px;
-      border-radius: 5px;
-      height: 400px;
-      overflow-y: scroll;
-      box-shadow: 0 0 5px #ccc;
-    }
+
     .card {
-      border: none;
+      height: 500px; /* set a fixed height for the card */
+      overflow-y: scroll; /* enable vertical scrolling when content overflows */
+      scroll-behavior: smooth; /* add smooth scrolling effect */
+      scroll-padding: 10px; /* add padding to the scrolling content */
+    }
+
+    .card-body {
+      height: 100%; /* set the height of the card-body to 100% */
+    }
+
+    #chat-area {
+      height: 100%; /* set the height of the chat area to 100% */
+      overflow-y: auto; /* enable vertical scrolling when content overflows */
+      display: flex; /* use flexbox to center the content vertically */
+      flex-direction: column; /* set the direction of the flexbox to column */
+      justify-content: flex-end; /* align the content to the bottom of the container */
+    }
+    #chat-form {
+      margin-bottom: 10px;
     }
     .navbar-brand img {
       margin-right: 10px;
@@ -72,12 +84,12 @@
 
 
     <div class="container mt-5">
-      <h1 class="text-center mb-5">Transform Your Sentence to Any Tense with Pori.</h1>
+      <h2 class="text-center mb-5">Transform Your Sentence to Any Tense with Pori.</h2>
 
         <form id="chat-form">
             <div class="form-group">
                 <label for="message">Write your base sentence:</label>
-                <input type="text" class="form-control" id="message" placeholder="Write your base sentence">
+                <input type="text" class="form-control" id="message" placeholder="Write your base sentence" required>
             </div>
             <div class="form-group row">
             <label for="option1" class="col-sm-2 col-form-label">Select Tense</label>
@@ -102,25 +114,25 @@
         </form>
 
 
-      <div class="card mb-5" style="height: 300px; overflow-y: scroll;">
-	<div class="card mb-5" style="height: 300px; overflow-y: scroll;">
+      <div class="card mb-5" style="height: 500px; overflow-y: scroll;">
+	<div class="card mb-5" style="height: 500px; overflow-y: scroll;">
 	<div class="card-body" id="chat-area">
 		<div class="row">
 			<div class="col-md-6 offset-md-6 text-right">
-				<p class="mb-0" style="text-align: justify;"><strong>Pori:</strong> How can I assist you?</p>
+{#				<p class="mb-0" style="text-align: justify;"><strong>Pori:</strong> How can I assist you?</p>#}
 			</div>
 		</div>
 	</div>
     </div>
-</div>
+    </div>
 
 <script>
-
     var chatArea = document.getElementById("chat-area");
-		var rows = chatArea.getElementsByClassName("row");
-		for (var i = rows.length - 1; i >= 0; i--) {
-			chatArea.insertBefore(rows[i], chatArea.firstChild);
-		}
+    chatArea.scrollTop = 0;
+    var rows = chatArea.getElementsByClassName("row");
+    for (var i = rows.length - 1; i >= 0; i--) {
+        chatArea.insertBefore(rows[i], chatArea.firstChild);
+    }
 
     $(document).ready(function(){
     $('#chat-form').submit(function(event) {
