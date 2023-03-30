@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transfer Sentence to Any Tense</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+    body {
+      background-color: #f2f2f2;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    #chat-form {
+      margin-bottom: 20px;
+    }
+    #chat-area {
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      height: 400px;
+      overflow-y: scroll;
+      box-shadow: 0 0 5px #ccc;
+    }
+    .card {
+      border: none;
+    }
+    .navbar-brand img {
+      margin-right: 10px;
+    }
+
+    .navbar-nav .nav-item .nav-link {
+      color: #333;
+      font-weight: 600;
+    }
+
+    .navbar-nav .nav-item .nav-link:hover {
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img src="{% static 'imran.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+        Tense Transformer
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'chat_page' %}">Chat with Eliza</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'grammar_page' %}">Tense Transformation</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+    <div class="container mt-5">
+      <h1 class="text-center mb-5">Transform Your Sentence to Any Tense.</h1>
+
+        <form id="chat-form">
+            <div class="form-group">
+                <label for="message">Write your base sentence:</label>
+                <input type="text" class="form-control" id="message" placeholder="Write your base sentence">
+            </div>
+            <div class="form-group row">
+            <label for="option1" class="col-sm-2 col-form-label">Select Tense</label>
+            <div class="col-sm-4">
+              <select class="form-control" id="option1">
+                <option value="Present" selected>Present</option>
+                <option value="Past">Past</option>
+                <option value="Future">Future</option>
+              </select>
+            </div>
+            <label for="option2" class="col-sm-2 col-form-label">Tense Type</label>
+            <div class="col-sm-4">
+              <select class="form-control" id="option2">
+                <option value="Simple" selected>Simple</option>
+                <option value="Perfect">Perfect</option>
+                <option value="Continuous">Continuous</option>
+                <option value="Perfect Continuous">Perfect Continuous</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+
+
+      <div class="card mb-5">
+            <div class="card-body" id="chat-area">
+                <div class="row">
+                    <div class="col-md-6 offset-md-6 text-right">
+
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+
+<script>
+$(document).ready(function(){
+    $('#chat-form').submit(function(event) {
+    event.preventDefault();
+    var message = $('#message').val();
+    $('#message').val('');
+    var option1 = $('#option1').val();
+    var option2 = $('#option2').val();
+
+    $('#chat-area').append('<div class="row"><div class="col-md-6"><p class="mb-0"><strong>You:</strong> ' + message + '<strong> <br>' + "Changing to: " + '</strong>' + option1 + " " + option2 +' </p></div></div>');
+    $.ajax({
+      url: 'check/', // Django view URL
+      method: 'POST',
+      data: {
+        'message': message,
+        'option1': option1,
+        'option2': option2,
+        'csrfmiddlewaretoken': '{{ csrf_token }}'
+      },
+      dataType: 'json',
+      success: function(response) {
+          $('#chat-area').append('<div class="row"><div class="col-md-6 offset-md-6 text-right"><p class="mb-0" style="text-align: justify;"><strong>Tasnim:</strong> ' + response.response_text  + '</p></div></div>');
+      },
+    });
+  });
+});
+</script>
+
+    <footer class="footer mt-auto py-3">
+      <div class="container">
+          <span class="text-muted">©2023 <a href="https://emon.com.bd"> Imran Nazir Emon</a>. All rights reserved.</span>
+      </div>
+    </footer>
+
+</body>
+</html>
